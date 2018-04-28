@@ -1,7 +1,6 @@
 'use strict';
 
 var _Cache = require('./dist/Cache');
-console.log(_Cache)
 var _Cache2 = _interopRequireDefault(_Cache);
 
 var _Request = require('./dist/Request');
