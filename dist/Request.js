@@ -39,7 +39,7 @@ function CreateRequest(axiosConfig) {
     // 对响应数据做点什么
     response.config.LoadingClose && response.config.LoadingClose.close();
     delete response.config.LoadingClose;
-    return new _ApiResponse2.default(response.data, response.config.axiosInstance);
+    return new _ApiResponse2.default(response.data, request);
     // return response.data
   }, function (error) {
     error.config.LoadingClose && error.config.LoadingClose.close();

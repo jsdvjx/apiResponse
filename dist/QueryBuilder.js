@@ -275,7 +275,7 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
   this.target = target;
   this.params = {};
   this.handle = (0, _Utility.guid)();
-  this.config = { axisoInstance: axisoInstance };
+  this.config = {};
   this.result = [];
 };
 
