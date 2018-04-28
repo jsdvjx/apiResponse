@@ -1,0 +1,22 @@
+{
+  "name": "apiresponse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsdvjx/apiResponse.git"
+  },
+  "author": "jsdvjx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsdvjx/apiResponse/issues"
+  },
+  "homepage": "https://github.com/jsdvjx/apiResponse#readme",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}
