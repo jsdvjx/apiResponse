@@ -8,15 +8,13 @@ var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _Cache = require('./Cache');
 
 var _Cache2 = _interopRequireDefault(_Cache);
-
-var _Request = require('./Request');
-
-var _Request2 = _interopRequireDefault(_Request);
 
 var _Schema = require('./Schema');
 
@@ -29,10 +27,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Resource = function () {
-  function Resource(resource) {
+  function Resource(resource, request) {
     var _this = this;
-
-    var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
     _classCallCheck(this, Resource);
 
@@ -49,19 +45,24 @@ var Resource = function () {
     this._create = false;
     this.resource = resource;
     this._copy = JSON.parse(JSON.stringify(resource.attributes));
-    this.name = name;
+    this.setRequest(request);
     this.requestConfig = {};
     if (resource.attributes.id !== undefined && resource.attributes.id instanceof Number) (0, _Cache2.default)(this.resource.type + '_' + this.resource.attributes.id, this.resource, 60);
     this.schema = _Schema2.default.get(this.resource.type);
     this._resolve();
   }
 
-  /**
-   * 获取资源类型
-   */
-
-
   _createClass(Resource, [{
+    key: 'setRequest',
+    value: function setRequest(request) {
+      this.Request = request;
+    }
+
+    /**
+     * 获取资源类型
+     */
+
+  }, {
     key: 'getType',
     value: function getType() {
       return this.resource.type;
@@ -79,7 +80,7 @@ var Resource = function () {
   }, {
     key: 'setRequestConfig',
     value: function setRequestConfig(config) {
-      this.requestConfig = config;
+      this.requestConfig = _extends({}, this.requestConfig, config);
     }
 
     /**
@@ -166,7 +167,7 @@ var Resource = function () {
                 }
 
                 _context2.next = 3;
-                return _Request2.default.post('' + this.type, this.item, this.requestConfig);
+                return this.Request.post('' + this.type, this.item, this.requestConfig);
 
               case 3:
                 result = _context2.sent;
@@ -179,7 +180,7 @@ var Resource = function () {
                 }
 
                 _context2.next = 10;
-                return _Request2.default.patch(this.type + '/' + this.id, this.changePart, this.requestConfig);
+                return this.Request.patch(this.type + '/' + this.id, this.changePart, this.requestConfig);
 
               case 10:
                 _result2 = _context2.sent;
@@ -276,7 +277,7 @@ var Resource = function () {
                 }
 
                 _context3.next = 3;
-                return _Request2.default.delete(target + '/' + id, config);
+                return this.Request.delete(target + '/' + id, config);
 
               case 3:
                 result = _context3.sent;
@@ -293,7 +294,7 @@ var Resource = function () {
         }, _callee3, this);
       }));
 
-      function _destroy(_x2, _x3) {
+      function _destroy(_x, _x2) {
         return _ref3.apply(this, arguments);
       }
 

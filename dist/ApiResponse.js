@@ -23,13 +23,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ApiResponse = function () {
-  function ApiResponse(response) {
-    var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
+  function ApiResponse(response, request) {
     _classCallCheck(this, ApiResponse);
 
     this.response = response;
-    this.name = name;
+    this.request = request;
     this.resolve();
   }
 
@@ -42,7 +40,7 @@ var ApiResponse = function () {
         _ApiAction2.default.add(this.response.data[0].type, this.response.actions);
       }
       this.list = this.response.data.map(function (item) {
-        return new _Resource2.default(item, _this.name);
+        return new _Resource2.default(item, _this.request);
       });
       _Schema2.default.set(this.response.schemas);
     }

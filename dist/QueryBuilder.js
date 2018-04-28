@@ -241,7 +241,7 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
   };
 
   this.setRequestConfig = function (config) {
-    _this.config = config;
+    _this.config = _extends({}, _this.config, config);
     _this.setResultRequestConfig();
   };
 
@@ -275,7 +275,7 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
   this.target = target;
   this.params = {};
   this.handle = (0, _Utility.guid)();
-  this.config = {};
+  this.config = { axisoInstance: axisoInstance };
   this.result = [];
 };
 
