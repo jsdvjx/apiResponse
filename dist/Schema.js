@@ -17,10 +17,12 @@ function SchemaKey(type) {
 var SCHEMAS = {};
 exports.default = {
   set: function set(schemas) {
-    schemas.forEach(function (schema) {
-      SCHEMAS[schema.type] = schema;
-      (0, _Cache2.default)(SchemaKey(schema.type), schema);
-    });
+    if (schemas) {
+      schemas.forEach(function (schema) {
+        SCHEMAS[schema.type] = schema;
+        (0, _Cache2.default)(SchemaKey(schema.type), schema);
+      });
+    }
   },
   get: function get(type) {
     if (SCHEMAS[type]) return SCHEMAS[type];else {

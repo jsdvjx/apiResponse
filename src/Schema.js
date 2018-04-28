@@ -7,10 +7,12 @@ function SchemaKey (type) {
 const SCHEMAS = {}
 export default {
   set (schemas) {
-    schemas.forEach((schema) => {
-      SCHEMAS[schema.type] = schema
-      Cache(SchemaKey(schema.type), schema)
-    })
+    if (schemas) {
+      schemas.forEach((schema) => {
+        SCHEMAS[schema.type] = schema
+        Cache(SchemaKey(schema.type), schema)
+      })
+    }
   },
   get (type) {
     if (SCHEMAS[type]) return SCHEMAS[type]
