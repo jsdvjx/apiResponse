@@ -10,7 +10,7 @@ export default class QueryBuilder {
     this.target = target
     this.params = {}
     this.handle = guid()
-    this.config = {axisoInstance}
+    this.config = {axiosInstance}
     this.result = []
   }
 
