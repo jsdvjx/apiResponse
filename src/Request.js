@@ -22,7 +22,7 @@ export default function CreateRequest (axiosConfig) {
     // 对响应数据做点什么
     response.config.LoadingClose && response.config.LoadingClose.close()
     delete response.config.LoadingClose
-    return new ApiResponse(response.data)
+    return new ApiResponse(response.data,response.config.axiosInstance)
     // return response.data
   }, function (error) {
     error.config.LoadingClose && error.config.LoadingClose.close()
@@ -30,12 +30,12 @@ export default function CreateRequest (axiosConfig) {
     return Promise.reject(error)
   })
   Object.defineProperties(request, {
-    new: {
+    New: {
       value: function (name) {
         return new QueryBuilder(request, name)
       }
     },
-    model: {
+    Model: {
       value: function (name) {
         if (Models[name]) return Models[name]
         else {

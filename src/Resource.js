@@ -1,17 +1,20 @@
 import Cache from './Cache'
-import Request from './Request'
 import Schema from './Schema'
 
 class Resource {
-  constructor (resource, name = null) {
+  constructor (resource, request) {
     this._create = false
     this.resource = resource
     this._copy = JSON.parse(JSON.stringify(resource.attributes))
-    this.name = name
+    this.setRequest(request)
     this.requestConfig = {}
     if (resource.attributes.id !== undefined && resource.attributes.id instanceof Number) Cache(`${this.resource.type}_${this.resource.attributes.id}`, this.resource, 60)
     this.schema = Schema.get(this.resource.type)
     this._resolve()
+  }
+
+  setRequest (request) {
+    this.Request = request
   }
 
   /**
@@ -29,7 +32,7 @@ class Resource {
   }
 
   setRequestConfig (config) {
-    this.requestConfig = config
+    this.requestConfig = {...this.requestConfig, ...config}
   }
 
   /**
@@ -76,7 +79,7 @@ class Resource {
 
   static async _destroy (id, target, config = {}) {
     if (id && target) {
-      let result = await Request.delete(`${target}/${id}`, config)
+      let result = await this.Request.delete(`${target}/${id}`, config)
       return result
     } else {
       throw new Error('Resource._destroy params error')
@@ -90,11 +93,11 @@ class Resource {
 
   async save () {
     if (this._create) {
-      let result = await Request.post(`${this.type}`, this.item, this.requestConfig)
+      let result = await this.Request.post(`${this.type}`, this.item, this.requestConfig)
       return result
     } else {
       if (this.change) {
-        let result = await Request.patch(`${this.type}/${this.id}`, this.changePart, this.requestConfig)
+        let result = await this.Request.patch(`${this.type}/${this.id}`, this.changePart, this.requestConfig)
         return result
       } else {
         return false

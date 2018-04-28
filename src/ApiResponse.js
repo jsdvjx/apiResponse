@@ -3,9 +3,9 @@ import ApiAction from './ApiAction'
 import Schema from './Schema'
 
 export default class ApiResponse {
-  constructor (response, name = '') {
+  constructor (response, request) {
     this.response = response
-    this.name = name
+    this.request = request
     this.resolve()
   }
 
@@ -14,7 +14,7 @@ export default class ApiResponse {
       ApiAction.add(this.response.data[0].type, this.response.actions)
     }
     this.list = this.response.data.map((item) => {
-      return new Resource(item, this.name)
+      return new Resource(item, this.request)
     })
     Schema.set(this.response.schemas)
   }

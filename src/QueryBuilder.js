@@ -10,9 +10,10 @@ export default class QueryBuilder {
     this.target = target
     this.params = {}
     this.handle = guid()
-    this.config = {}
+    this.config = {axisoInstance}
     this.result = []
   }
+
   get = async (id) => {
     let result = null
     try {
@@ -111,7 +112,7 @@ export default class QueryBuilder {
     })
   }
   setRequestConfig = (config) => {
-    this.config = config
+    this.config = {...this.config, ...config}
     this.setResultRequestConfig()
   }
   _fun = (name, params) => {
