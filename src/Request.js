@@ -30,7 +30,7 @@ export default function CreateRequest (axiosConfig) {
     return Promise.reject(error)
   })
   Object.defineProperties(request, {
-    New: {
+    new: {
       value: function (name) {
         return new QueryBuilder(request, name)
       }
@@ -45,4 +45,5 @@ export default function CreateRequest (axiosConfig) {
       }
     }
   })
+  return request;
 }
