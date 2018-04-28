@@ -8,7 +8,7 @@ function getToken (Request) {
     if (token !== null) {
       resolve(token)
     } else {
-      Request.QiniuTokens.create({}).then(function (response) {
+      Request.Model('QiniuTokens').create({}).then(function (response) {
         Cache('QINIU_TOKEN', response.getItem(), response.getItem().expires - 100)
         resolve(response.getItem())
       }).catch(function (error) {
