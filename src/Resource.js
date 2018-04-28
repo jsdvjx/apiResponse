@@ -42,7 +42,7 @@ class Resource {
     let props = {}
     if (this.resource.include !== undefined && this.resource.include !== null) {
       this.include = this.resource.include.map((item) => {
-        return new Resource(item,this.request)
+        return new Resource(item, this.request)
       })
     }
     let attributes = this.resource.attributes
@@ -71,8 +71,8 @@ class Resource {
     return Object.defineProperties(this, props)
   }
 
-  static create (attributes, type) {
-    let result = new Resource({attributes, type}, null, true)
+  static create (attributes, type, request) {
+    let result = new Resource({attributes, type}, request)
     result._create = true
     return result
   }

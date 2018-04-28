@@ -258,8 +258,8 @@ var Resource = function () {
     }
   }], [{
     key: 'create',
-    value: function create(attributes, type) {
-      var result = new Resource({ attributes: attributes, type: type }, null, true);
+    value: function create(attributes, type, request) {
+      var result = new Resource({ attributes: attributes, type: type }, request);
       result._create = true;
       return result;
     }

@@ -80,7 +80,7 @@ export default class QueryBuilder {
   }
   create = async (data) => {
     // TODO 添加数据验证
-    let result = await Resource.create(data, this.target).save()
+    let result = await Resource.create(data, this.target, this.axiosInstance).save()
     if (result.list[0] !== undefined) {
       return result.list[0]
     } else {

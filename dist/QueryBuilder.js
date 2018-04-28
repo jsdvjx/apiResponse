@@ -145,7 +145,7 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.next = 2;
-              return _Resource2.default.create(data, _this.target).save();
+              return _Resource2.default.create(data, _this.target, _this.axiosInstance).save();
 
             case 2:
               result = _context2.sent;
