@@ -46,23 +46,20 @@ function CreateRequest(axiosConfig) {
     delete error.config.LoadingClose;
     return Promise.reject(error);
   });
-  return new Proxy(request, {
-    get: function get(target, key, receiver) {
-      if (key === 'New') {
-        return function (rName) {
-          return new _QueryBuilder2.default(target, rName);
-        };
+  Object.defineProperties(request, {
+    new: {
+      value: function value(name) {
+        return new _QueryBuilder2.default(request, name);
       }
-      if (Models[key] !== undefined) {
-        return Models[key];
-      }
-      if (Reflect.get(target, key, receiver) === undefined) {
-        var qb = new _QueryBuilder2.default(target, key);
-        Models[key] = qb;
-        return qb;
-      } else {
-        return Reflect.get(target, key, receiver);
+    },
+    model: {
+      value: function value(name) {
+        if (Models[name]) return Models[name];else {
+          Models[name] = new _QueryBuilder2.default(request, name);
+          return Models[name];
+        }
       }
     }
   });
+  return request;
 }
