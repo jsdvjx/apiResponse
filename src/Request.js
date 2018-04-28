@@ -2,7 +2,6 @@ import axios from 'axios'
 import QueryBuilder from './QueryBuilder'
 import ApiResponse from './ApiResponse'
 
-
 const Models = {}
 export default function CreateRequest (axiosConfig) {
   let request = axios.create(axiosConfig)
@@ -30,22 +29,19 @@ export default function CreateRequest (axiosConfig) {
     delete error.config.LoadingClose
     return Promise.reject(error)
   })
-  return new Proxy(request, {
-    get: function (target, key, receiver) {
-      if (key === 'New') {
-        return function (rName) {
-          return new QueryBuilder(target, rName)
+  Object.defineProperties(request, {
+    New: {
+      value: function (name) {
+        return new QueryBuilder(request, name)
+      }
+    },
+    model: {
+      value: function (name) {
+        if (Models[name]) return Models[name]
+        else {
+          Models[name] = new QueryBuilder(request, name)
+          return Models[name]
         }
-      }
-      if (Models[key] !== undefined) {
-        return Models[key]
-      }
-      if (Reflect.get(target, key, receiver) === undefined) {
-        let qb = new QueryBuilder(target, key)
-        Models[key] = qb
-        return qb
-      } else {
-        return Reflect.get(target, key, receiver)
       }
     }
   })
