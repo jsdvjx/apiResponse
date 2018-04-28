@@ -37,14 +37,38 @@ function getCacheValue(cache) {
   }
 }
 
+/**
+ *获取缓存
+ * @param {string} key 键名
+ */
 function get(key) {
+  // TODO:过期时间未封装
   return getCacheValue(localStorage.getItem(key));
 }
 
+/**
+ * 设置缓存
+ * @param {string} key 键名
+ * @param {any} value 值
+ * @param {number} expire 过期时间
+ */
 function set(key, value, expire) {
+  // TODO:过期时间未封装
   return localStorage.setItem(key, makeCacheValue(value, expire));
 }
 
+/**
+ *删除缓存
+ * @param {string} key 键名
+ */
 function remove(key) {
   return localStorage.removeItem(key);
 }
+
+/**
+ * Cache
+ * 缓存函数,未完成过期时间的封装
+ * @param {string} key 键名
+ * @param {boolean|null|any} value 值
+ * @param {number} expire 过期时间
+ */

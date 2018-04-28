@@ -22,19 +22,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Models = {};
 function CreateRequest(axiosConfig) {
   var request = _axios2.default.create(axiosConfig);
-
+  /*
+  window.onerror = function (error) {
+    console.log(error)
+  } */
   request.interceptors.request.use(function (config) {
     if (config.Loading) {
       config.LoadingClose = config.Loading();
+      // delete config.Loading
     }
     return config;
   }, function (error) {
     return Promise.reject(error);
   });
   request.interceptors.response.use(function (response) {
+    // 对响应数据做点什么
     response.config.LoadingClose && response.config.LoadingClose.close();
     delete response.config.LoadingClose;
     return new _ApiResponse2.default(response.data);
+    // return response.data
   }, function (error) {
     error.config.LoadingClose && error.config.LoadingClose.close();
     delete error.config.LoadingClose;

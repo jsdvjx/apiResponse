@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _Cache = require('./Cache');
@@ -52,11 +56,21 @@ var Resource = function () {
     this._resolve();
   }
 
+  /**
+   * 获取资源类型
+   */
+
+
   _createClass(Resource, [{
     key: 'getType',
     value: function getType() {
       return this.resource.type;
     }
+
+    /**
+     * 获取资源内容
+     */
+
   }, {
     key: 'getItem',
     value: function getItem() {
@@ -67,6 +81,11 @@ var Resource = function () {
     value: function setRequestConfig(config) {
       this.requestConfig = config;
     }
+
+    /**
+     * 解析资源建立getter，setter
+     */
+
   }, {
     key: '_resolve',
     value: function _resolve() {
@@ -104,9 +123,9 @@ var Resource = function () {
   }, {
     key: 'destroy',
     value: function () {
-      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+      var _ref = _asyncToGenerator( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
         var result;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+        return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
@@ -134,10 +153,10 @@ var Resource = function () {
   }, {
     key: 'save',
     value: function () {
-      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2() {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
         var result, _result2;
 
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        return _regenerator2.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
@@ -244,10 +263,10 @@ var Resource = function () {
   }, {
     key: '_destroy',
     value: function () {
-      var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(id, target) {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/_regenerator2.default.mark(function _callee3(id, target) {
         var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
         var result;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        return _regenerator2.default.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:

@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _Utility = require('./Utility');
@@ -21,6 +25,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+// import ApiResponse from './ApiResponse'
+// import EVENT from './Event'
+
 
 var QueryBuilder = function QueryBuilder(axiosInstance, target) {
   var _this = this;
@@ -28,9 +35,9 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
   _classCallCheck(this, QueryBuilder);
 
   this.get = function () {
-    var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(id) {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_regenerator2.default.mark(function _callee(id) {
       var result;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
+      return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
@@ -105,8 +112,10 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
             return 'sortedBy=asc&orderBy=' + val;
           }
         case 'page':
+          // 取最后两个值
           return 'page=' + val[val.length - 2] + '&limit=' + val[val.length - 1];
         case 'filter':
+          // TODO::需要实现查询操作符
           return 'search=' + val.map(function (f) {
             return f.field + ':' + f.value;
           }).join(';') + '&searchFields=' + val.map(function (f) {
@@ -129,9 +138,9 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
   };
 
   this.create = function () {
-    var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(data) {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regenerator2.default.mark(function _callee2(data) {
       var result;
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      return _regenerator2.default.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
@@ -165,9 +174,9 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
   }();
 
   this.destroy = function () {
-    var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(id) {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_regenerator2.default.mark(function _callee3(id) {
       var result;
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      return _regenerator2.default.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
@@ -191,13 +200,16 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
     };
   }();
 
-  this.fetch = _asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
+  this.fetch = _asyncToGenerator( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
     var url, result;
-    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+    return _regenerator2.default.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
             url = _this.target + '?' + _this.makeQueryString();
+            // console.log(url)
+            // EVENT.$emit('HTTP_GET', url)
+
             _context4.next = 3;
             return _this.axiosInstance.get(url, _extends({}, _this.config));
 
