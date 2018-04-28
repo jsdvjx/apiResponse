@@ -90,10 +90,12 @@ var Resource = function () {
   }, {
     key: '_resolve',
     value: function _resolve() {
+      var _this2 = this;
+
       var props = {};
       if (this.resource.include !== undefined && this.resource.include !== null) {
         this.include = this.resource.include.map(function (item) {
-          return new Resource(item);
+          return new Resource(item, _this2.request);
         });
       }
       var attributes = this.resource.attributes;
