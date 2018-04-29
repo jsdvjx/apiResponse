@@ -3,10 +3,10 @@ import Schema from './Schema'
 
 class Resource {
   constructor (resource, request) {
+    this.setRequest(request)
     this._create = false
     this.resource = resource
     this._copy = JSON.parse(JSON.stringify(resource.attributes))
-    this.setRequest(request)
     this.requestConfig = {}
     if (resource.attributes.id !== undefined && resource.attributes.id instanceof Number) Cache(`${this.resource.type}_${this.resource.attributes.id}`, this.resource, 60)
     this.schema = Schema.get(this.resource.type)
@@ -87,12 +87,13 @@ class Resource {
     }*/
   }
 
-  async destroy () {
+  destroy = async () => {
+    console.log(this.Request)
     let result = await this.Request.delete(`${this.getType()}/${this.id}`, this.requestConfig)
     return result
   }
 
-  async save () {
+  save = async () => {
     if (this._create) {
       let result = await this.Request.post(`${this.type}`, this.item, this.requestConfig)
       return result
@@ -117,6 +118,7 @@ class Resource {
   }
 
   get item () {
+    let _this = this
     if (this.resource.attributes._binding) {
       return this.resource.attributes
     }
@@ -129,13 +131,13 @@ class Resource {
       },
       _save: {
         get: function () {
-          return this.save
-        }.bind(this)
+          return _this.save
+        }
       },
       _destroy: {
         get: function () {
-          return this.destroy
-        }.bind(this)
+          return _this.destroy
+        }
       }
     }
     if (include) {

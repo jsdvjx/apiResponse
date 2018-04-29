@@ -28,24 +28,88 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Resource = function () {
   function Resource(resource, request) {
-    var _this = this;
+    var _this2 = this;
 
     _classCallCheck(this, Resource);
 
+    this.destroy = _asyncToGenerator( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+      var result;
+      return _regenerator2.default.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              console.log(_this2.Request);
+              _context.next = 3;
+              return _this2.Request.delete(_this2.getType() + '/' + _this2.id, _this2.requestConfig);
+
+            case 3:
+              result = _context.sent;
+              return _context.abrupt('return', result);
+
+            case 5:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, _callee, _this2);
+    }));
+    this.save = _asyncToGenerator( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
+      var result, _result2;
+
+      return _regenerator2.default.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              if (!_this2._create) {
+                _context2.next = 7;
+                break;
+              }
+
+              _context2.next = 3;
+              return _this2.Request.post('' + _this2.type, _this2.item, _this2.requestConfig);
+
+            case 3:
+              result = _context2.sent;
+              return _context2.abrupt('return', result);
+
+            case 7:
+              if (!_this2.change) {
+                _context2.next = 14;
+                break;
+              }
+
+              _context2.next = 10;
+              return _this2.Request.patch(_this2.type + '/' + _this2.id, _this2.changePart, _this2.requestConfig);
+
+            case 10:
+              _result2 = _context2.sent;
+              return _context2.abrupt('return', _result2);
+
+            case 14:
+              return _context2.abrupt('return', false);
+
+            case 15:
+            case 'end':
+              return _context2.stop();
+          }
+        }
+      }, _callee2, _this2);
+    }));
+
     this.itemInclude = function () {
       var _result = {};
-      if (_this.include !== undefined && _this.include.length) {
-        _this.include.forEach(function (include) {
+      if (_this2.include !== undefined && _this2.include.length) {
+        _this2.include.forEach(function (include) {
           _result[include.type] = include.item;
         });
       }
       return Object.keys(_result).length ? _result : null;
     };
 
+    this.setRequest(request);
     this._create = false;
     this.resource = resource;
     this._copy = JSON.parse(JSON.stringify(resource.attributes));
-    this.setRequest(request);
     this.requestConfig = {};
     if (resource.attributes.id !== undefined && resource.attributes.id instanceof Number) (0, _Cache2.default)(this.resource.type + '_' + this.resource.attributes.id, this.resource, 60);
     this.schema = _Schema2.default.get(this.resource.type);
@@ -90,12 +154,12 @@ var Resource = function () {
   }, {
     key: '_resolve',
     value: function _resolve() {
-      var _this2 = this;
+      var _this3 = this;
 
       var props = {};
       if (this.resource.include !== undefined && this.resource.include !== null) {
         this.include = this.resource.include.map(function (item) {
-          return new Resource(item, _this2.request);
+          return new Resource(item, _this3.request);
         });
       }
       var attributes = this.resource.attributes;
@@ -124,90 +188,9 @@ var Resource = function () {
       return Object.defineProperties(this, props);
     }
   }, {
-    key: 'destroy',
-    value: function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-        var result;
-        return _regenerator2.default.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return this.Request.delete(this.getType() + '/' + this.id, this.requestConfig);
-
-              case 2:
-                result = _context.sent;
-                return _context.abrupt('return', result);
-
-              case 4:
-              case 'end':
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function destroy() {
-        return _ref.apply(this, arguments);
-      }
-
-      return destroy;
-    }()
-  }, {
-    key: 'save',
-    value: function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
-        var result, _result2;
-
-        return _regenerator2.default.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                if (!this._create) {
-                  _context2.next = 7;
-                  break;
-                }
-
-                _context2.next = 3;
-                return this.Request.post('' + this.type, this.item, this.requestConfig);
-
-              case 3:
-                result = _context2.sent;
-                return _context2.abrupt('return', result);
-
-              case 7:
-                if (!this.change) {
-                  _context2.next = 14;
-                  break;
-                }
-
-                _context2.next = 10;
-                return this.Request.patch(this.type + '/' + this.id, this.changePart, this.requestConfig);
-
-              case 10:
-                _result2 = _context2.sent;
-                return _context2.abrupt('return', _result2);
-
-              case 14:
-                return _context2.abrupt('return', false);
-
-              case 15:
-              case 'end':
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function save() {
-        return _ref2.apply(this, arguments);
-      }
-
-      return save;
-    }()
-  }, {
     key: 'item',
     get: function get() {
+      var _this = this;
       if (this.resource.attributes._binding) {
         return this.resource.attributes;
       }
@@ -219,14 +202,14 @@ var Resource = function () {
           }
         },
         _save: {
-          get: function () {
-            return this.save;
-          }.bind(this)
+          get: function get() {
+            return _this.save;
+          }
         },
         _destroy: {
-          get: function () {
-            return this.destroy;
-          }.bind(this)
+          get: function get() {
+            return _this.destroy;
+          }
         }
       };
       if (include) {
