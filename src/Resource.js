@@ -117,8 +117,12 @@ class Resource {
   }
 
   get item () {
+    if (this.resource.attributes._binding) {
+      return this.resource.attributes
+    }
     let include = this.itemInclude()
     let props = {
+      _binding: {get: true},
       _save: {
         get: function () {
           return this.save

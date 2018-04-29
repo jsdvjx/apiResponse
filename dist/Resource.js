@@ -208,8 +208,12 @@ var Resource = function () {
   }, {
     key: 'item',
     get: function get() {
+      if (this.resource.attributes._binding) {
+        return this.resource.attributes;
+      }
       var include = this.itemInclude();
       var props = {
+        _binding: { get: true },
         _save: {
           get: function () {
             return this.save;
