@@ -133,7 +133,7 @@ var Resource = function () {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return Resource._destroy(this.id, this.getType(), this.requestConfig);
+                return this.Request.delete(this.getType() + '/' + this.id, this.requestConfig);
 
               case 2:
                 result = _context.sent;
@@ -210,12 +210,12 @@ var Resource = function () {
     get: function get() {
       var include = this.itemInclude();
       var props = {
-        save: {
+        _save: {
           get: function () {
             return this.save;
           }.bind(this)
         },
-        destroy: {
+        _destroy: {
           get: function () {
             return this.destroy;
           }.bind(this)
@@ -268,27 +268,10 @@ var Resource = function () {
     value: function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/_regenerator2.default.mark(function _callee3(id, target) {
         var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-        var result;
         return _regenerator2.default.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                if (!(id && target)) {
-                  _context3.next = 7;
-                  break;
-                }
-
-                _context3.next = 3;
-                return this.Request.delete(target + '/' + id, config);
-
-              case 3:
-                result = _context3.sent;
-                return _context3.abrupt('return', result);
-
-              case 7:
-                throw new Error('Resource._destroy params error');
-
-              case 8:
               case 'end':
                 return _context3.stop();
             }

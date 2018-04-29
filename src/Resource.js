@@ -78,16 +78,17 @@ class Resource {
   }
 
   static async _destroy (id, target, config = {}) {
+    /*
     if (id && target) {
       let result = await this.Request.delete(`${target}/${id}`, config)
       return result
     } else {
       throw new Error('Resource._destroy params error')
-    }
+    }*/
   }
 
   async destroy () {
-    let result = await Resource._destroy(this.id, this.getType(), this.requestConfig)
+    let result = await this.Request.delete(`${this.getType()}/${this.id}`, this.requestConfig)
     return result
   }
 
@@ -118,12 +119,12 @@ class Resource {
   get item () {
     let include = this.itemInclude()
     let props = {
-      save: {
+      _save: {
         get: function () {
           return this.save
         }.bind(this)
       },
-      destroy: {
+      _destroy: {
         get: function () {
           return this.destroy
         }.bind(this)
