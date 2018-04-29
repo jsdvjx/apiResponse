@@ -122,7 +122,11 @@ class Resource {
     }
     let include = this.itemInclude()
     let props = {
-      _binding: {get: true},
+      _binding: {
+        get: function () {
+          return true
+        }
+      },
       _save: {
         get: function () {
           return this.save

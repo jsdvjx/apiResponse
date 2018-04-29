@@ -213,7 +213,11 @@ var Resource = function () {
       }
       var include = this.itemInclude();
       var props = {
-        _binding: { get: true },
+        _binding: {
+          get: function get() {
+            return true;
+          }
+        },
         _save: {
           get: function () {
             return this.save;
