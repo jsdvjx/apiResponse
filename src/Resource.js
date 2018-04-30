@@ -5,11 +5,11 @@ class Resource {
   constructor (resource, request) {
     this.setRequest(request)
     this._create = false
-    this.resource = resource
+    this._resource = resource
     this._copy = JSON.parse(JSON.stringify(resource.attributes))
     this.requestConfig = {}
-    if (resource.attributes.id !== undefined && resource.attributes.id instanceof Number) Cache(`${this.resource.type}_${this.resource.attributes.id}`, this.resource, 60)
-    this.schema = Schema.get(this.resource.type)
+    if (resource.attributes.id !== undefined && resource.attributes.id instanceof Number) Cache(`${this._resource.type}_${this._resource.attributes.id}`, this._resource, 60)
+    this.schema = Schema.get(this._resource.type)
     this._resolve()
   }
 
@@ -21,14 +21,14 @@ class Resource {
    * 获取资源类型
    */
   getType () {
-    return this.resource.type
+    return this._resource.type
   }
 
   /**
    * 获取资源内容
    */
   getItem () {
-    return this.resource.attributes
+    return this._resource.attributes
   }
 
   setRequestConfig (config) {
@@ -40,12 +40,12 @@ class Resource {
    */
   _resolve () {
     let props = {}
-    if (this.resource.include !== undefined && this.resource.include !== null) {
-      this.include = this.resource.include.map((item) => {
+    if (this._resource.include !== undefined && this._resource.include !== null) {
+      this.include = this._resource.include.map((item) => {
         return new Resource(item, this.request)
       })
     }
-    let attributes = this.resource.attributes
+    let attributes = this._resource.attributes
     Object.keys(attributes).forEach((key) => {
       props[key] = {
         get () {
@@ -131,8 +131,8 @@ class Resource {
 
   get item () {
     let _this = this
-    if (this.resource.attributes._binding) {
-      return this.resource.attributes
+    if (this._resource.attributes._binding) {
+      return this._resource.attributes
     }
     let include = this.itemInclude()
     let props = {
@@ -161,8 +161,8 @@ class Resource {
         }
       })
     }
-    Object.defineProperties(this.resource.attributes, props)
-    return this.resource.attributes
+    Object.defineProperties(this._resource.attributes, props)
+    return this._resource.attributes
   }
 
   get change () {
@@ -182,7 +182,7 @@ class Resource {
   }
 
   get type () {
-    return this.resource.type
+    return this._resource.type
   }
 }
 

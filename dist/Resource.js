@@ -108,11 +108,11 @@ var Resource = function () {
 
     this.setRequest(request);
     this._create = false;
-    this.resource = resource;
+    this._resource = resource;
     this._copy = JSON.parse(JSON.stringify(resource.attributes));
     this.requestConfig = {};
-    if (resource.attributes.id !== undefined && resource.attributes.id instanceof Number) (0, _Cache2.default)(this.resource.type + '_' + this.resource.attributes.id, this.resource, 60);
-    this.schema = _Schema2.default.get(this.resource.type);
+    if (resource.attributes.id !== undefined && resource.attributes.id instanceof Number) (0, _Cache2.default)(this._resource.type + '_' + this._resource.attributes.id, this._resource, 60);
+    this.schema = _Schema2.default.get(this._resource.type);
     this._resolve();
   }
 
@@ -129,7 +129,7 @@ var Resource = function () {
   }, {
     key: 'getType',
     value: function getType() {
-      return this.resource.type;
+      return this._resource.type;
     }
 
     /**
@@ -139,7 +139,7 @@ var Resource = function () {
   }, {
     key: 'getItem',
     value: function getItem() {
-      return this.resource.attributes;
+      return this._resource.attributes;
     }
   }, {
     key: 'setRequestConfig',
@@ -157,12 +157,12 @@ var Resource = function () {
       var _this3 = this;
 
       var props = {};
-      if (this.resource.include !== undefined && this.resource.include !== null) {
-        this.include = this.resource.include.map(function (item) {
+      if (this._resource.include !== undefined && this._resource.include !== null) {
+        this.include = this._resource.include.map(function (item) {
           return new Resource(item, _this3.request);
         });
       }
-      var attributes = this.resource.attributes;
+      var attributes = this._resource.attributes;
       Object.keys(attributes).forEach(function (key) {
         props[key] = {
           get: function get() {
@@ -191,8 +191,8 @@ var Resource = function () {
     key: 'item',
     get: function get() {
       var _this = this;
-      if (this.resource.attributes._binding) {
-        return this.resource.attributes;
+      if (this._resource.attributes._binding) {
+        return this._resource.attributes;
       }
       var include = this.itemInclude();
       var props = {
@@ -221,8 +221,8 @@ var Resource = function () {
           };
         });
       }
-      Object.defineProperties(this.resource.attributes, props);
-      return this.resource.attributes;
+      Object.defineProperties(this._resource.attributes, props);
+      return this._resource.attributes;
     }
   }, {
     key: 'change',
@@ -245,7 +245,7 @@ var Resource = function () {
   }, {
     key: 'type',
     get: function get() {
-      return this.resource.type;
+      return this._resource.type;
     }
   }], [{
     key: 'create',
