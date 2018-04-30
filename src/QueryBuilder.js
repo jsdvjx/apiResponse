@@ -87,6 +87,9 @@ export default class QueryBuilder {
       return result
     }
   }
+  makeResource = (data) => {
+    return Resource.create(data, this.target, this.axiosInstance)
+  }
   destroy = async (id) => {
     let result = await Resource._destroy(id, this.target)
     return result
