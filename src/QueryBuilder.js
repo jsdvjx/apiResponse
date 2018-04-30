@@ -87,7 +87,7 @@ export default class QueryBuilder {
       return result
     }
   }
-  makeResource = (data) => {
+  makeResource = (data = null) => {
     return Resource.create(data, this.target, this.axiosInstance)
   }
   destroy = async (id) => {

@@ -72,9 +72,21 @@ class Resource {
   }
 
   static create (attributes, type, request) {
-    let result = new Resource({attributes, type}, request)
-    result._create = true
-    return result
+    if (attributes === null) {
+      let _schema = Schema.get(type).map
+      let _attrs = {}
+      let _filter = ['created_at', 'updated_at', 'id']
+      Object.keys(_schema).forEach(function (field) {
+        if (_filter.indexOf(field) < 0) _attrs[field] = null
+      })
+      let result = new Resource({attributes: _attrs, type}, request)
+      result._create = true
+      return result
+    } else {
+      let result = new Resource({attributes, type}, request)
+      result._create = true
+      return result
+    }
   }
 
   static async _destroy (id, target, config = {}) {
@@ -162,7 +174,7 @@ class Resource {
   get changePart () {
     let ret = {}
     Object.keys(this._copy).filter(function (key) {
-      return this.item[key] !== this._copy[key]
+      return this.item[key] !== null && this.item[key] !== this._copy[key]
     }.bind(this)).forEach(function (key) {
       ret[key] = this.item[key]
     }.bind(this))

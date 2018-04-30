@@ -236,7 +236,7 @@ var Resource = function () {
     get: function get() {
       var ret = {};
       Object.keys(this._copy).filter(function (key) {
-        return this.item[key] !== this._copy[key];
+        return this.item[key] !== null && this.item[key] !== this._copy[key];
       }.bind(this)).forEach(function (key) {
         ret[key] = this.item[key];
       }.bind(this));
@@ -250,9 +250,21 @@ var Resource = function () {
   }], [{
     key: 'create',
     value: function create(attributes, type, request) {
-      var result = new Resource({ attributes: attributes, type: type }, request);
-      result._create = true;
-      return result;
+      if (attributes === null) {
+        var _schema = _Schema2.default.get(type).map;
+        var _attrs = {};
+        var _filter = ['created_at', 'updated_at', 'id'];
+        Object.keys(_schema).forEach(function (field) {
+          if (_filter.indexOf(field) < 0) _attrs[field] = null;
+        });
+        var result = new Resource({ attributes: _attrs, type: type }, request);
+        result._create = true;
+        return result;
+      } else {
+        var _result3 = new Resource({ attributes: attributes, type: type }, request);
+        _result3._create = true;
+        return _result3;
+      }
     }
   }, {
     key: '_destroy',

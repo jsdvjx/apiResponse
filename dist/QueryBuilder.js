@@ -173,6 +173,12 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
     };
   }();
 
+  this.makeResource = function () {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+    return _Resource2.default.create(data, _this.target, _this.axiosInstance);
+  };
+
   this.destroy = function () {
     var _ref3 = _asyncToGenerator( /*#__PURE__*/_regenerator2.default.mark(function _callee3(id) {
       var result;
@@ -195,7 +201,7 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
       }, _callee3, _this);
     }));
 
-    return function (_x4) {
+    return function (_x5) {
       return _ref3.apply(this, arguments);
     };
   }();
