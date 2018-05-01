@@ -152,7 +152,7 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
     return result;
   };
 
-  this._filter = function (qeruy, val) {
+  this._filter = function (query, val) {
     var opreation = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'like';
 
     return query + '=' + val.map(function (f) {
@@ -163,7 +163,7 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
       } else {
         return f.field + ':' + opreation;
       }
-    }).join(';') + (query + '&Join=and');
+    }).join(';') + ('&' + query + 'Join=and');
   };
 
   this.create = function () {

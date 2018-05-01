@@ -91,7 +91,7 @@ export default class QueryBuilder {
     }
     return result
   }
-  _filter = (qeruy, val, opreation = 'like') => {
+  _filter = (query, val, opreation = 'like') => {
     return `${query}=` + val.map((f) => {
       return `${f.field}:${f.value}`
     }).join(';') + `&${query}Fields=` + val.map((f) => {
@@ -100,7 +100,7 @@ export default class QueryBuilder {
       } else {
         return `${f.field}:${opreation}`
       }
-    }).join(';') + `${query}&Join=and`
+    }).join(';') + `&${query}Join=and`
   }
   create = async (data) => {
     // TODO 添加数据验证
