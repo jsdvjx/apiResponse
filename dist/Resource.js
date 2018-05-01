@@ -100,7 +100,8 @@ var Resource = function () {
       var _result = {};
       if (_this2.include !== undefined && _this2.include.length) {
         _this2.include.forEach(function (include) {
-          _result[include.type] = include.item;
+          if (_result[include.type] === undefined) _result[include.type] = [];
+          _result[include.type].push(include.item);
         });
       }
       return Object.keys(_result).length ? _result : null;
@@ -184,14 +185,16 @@ var Resource = function () {
               return _tmp.length ? _tmp[0].item : null;
             }
           };
-          props[includeName + 'Items'] = {
-            get: function get() {
-              var _tmp = this.include !== undefined && this.include.length && this.include.filter(function (_include) {
-                return _include.type === includeName;
-              });
-              return _tmp.length ? _tmp : [];
+          /*
+          props[`${includeName}Items`] = {
+            get () {
+              let _tmp = (this.include !== undefined && this.include.length) && this.include.filter(function (_include) {
+                return _include.type === includeName
+              })
+              return _tmp.length ? _tmp : []
             }
-          };
+          }
+          */
         });
       }
       return Object.defineProperties(this, props);
@@ -225,9 +228,10 @@ var Resource = function () {
         Object.keys(include).forEach(function (key) {
           props[key] = {
             get: function get() {
-              return include[key];
+              return include[key][0];
             }
           };
+          props[key + 'Items'] = include[key];
         });
       }
       Object.defineProperties(this._resource.attributes, props);

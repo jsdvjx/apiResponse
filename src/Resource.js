@@ -67,6 +67,7 @@ class Resource {
             return _tmp.length ? _tmp[0].item : null
           }
         }
+        /*
         props[`${includeName}Items`] = {
           get () {
             let _tmp = (this.include !== undefined && this.include.length) && this.include.filter(function (_include) {
@@ -75,6 +76,7 @@ class Resource {
             return _tmp.length ? _tmp : []
           }
         }
+        */
       })
     }
     return Object.defineProperties(this, props)
@@ -132,7 +134,8 @@ class Resource {
     let _result = {}
     if ((this.include !== undefined && this.include.length)) {
       this.include.forEach(function (include) {
-        _result[include.type] = include.item
+        if (_result[include.type] === undefined) _result[include.type] = []
+        _result[include.type].push(include.item)
       })
     }
     return Object.keys(_result).length ? _result : null
@@ -165,9 +168,10 @@ class Resource {
       Object.keys(include).forEach((key) => {
         props[key] = {
           get () {
-            return include[key]
+            return include[key][0]
           }
         }
+        props[`${key}Items`] = include[key]
       })
     }
     Object.defineProperties(this._resource.attributes, props)
