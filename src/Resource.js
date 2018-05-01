@@ -67,6 +67,14 @@ class Resource {
             return _tmp.length ? _tmp[0].item : null
           }
         }
+        props[`${includeName}Items`] = {
+          get () {
+            let _tmp = (this.include !== undefined && this.include.length) && this.include.filter(function (_include) {
+              return _include.type === includeName
+            })
+            return _tmp.length ? _tmp : []
+          }
+        }
       })
     }
     return Object.defineProperties(this, props)
