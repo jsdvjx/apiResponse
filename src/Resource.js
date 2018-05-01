@@ -10,6 +10,7 @@ class Resource {
     this.requestConfig = {}
     if (resource.attributes.id !== undefined && resource.attributes.id instanceof Number) Cache(`${this._resource.type}_${this._resource.attributes.id}`, this._resource, 60)
     this.schema = Schema.get(this._resource.type)
+    this.schem = this.schema ? this.schema : {}
     this._resolve()
   }
 
