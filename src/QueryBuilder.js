@@ -1,4 +1,5 @@
 import { getType, guid } from './Utility'
+import Schema from './Schema'
 // import ApiResponse from './ApiResponse'
 // import EVENT from './Event'
 import Resource from './Resource'
@@ -12,8 +13,21 @@ export default class QueryBuilder {
     this.handle = guid()
     this.config = {}
     this.result = []
+    this.schema = Schema.get(target)
+    this.setWith()
   }
 
+  setWith = () => {
+    let props = {}
+    this.schema.withes.forEach((withName) => {
+      props[withName] = {
+        get () {
+          return this._fun
+        }
+      }
+    })
+    Object.defineProperties(this, props)
+  }
   get = async (id) => {
     let result = null
     try {
@@ -60,16 +74,11 @@ export default class QueryBuilder {
           return `page=${val[val.length - 2]}&limit=${val[val.length - 1]}`
         case 'filter':
           // TODO::需要实现查询操作符
-          return 'search=' + val.map((f) => {
-            return `${f.field}:${f.value}`
-          }).join(';') + '&searchFields=' + val.map((f) => {
-            if (f.opreation) {
-              return `${f.field}:${f.opreation}`
-            } else {
-              return `${f.field}:like`
-            }
-          }).join(';') + '&searchJoin=and'
+          return this._filter('search', val)
         default:
+          if (this.schema.withes.indexOf(key) >= 0) {
+            return this._filter(key, val, '=')
+          }
           return false
       }
     }).filter(b => b).join('&')
@@ -77,6 +86,17 @@ export default class QueryBuilder {
       this.params = {}
     }
     return result
+  }
+  _filter = (qeruy, val, opreation = 'like') => {
+    return `${query}=` + val.map((f) => {
+      return `${f.field}:${f.value}`
+    }).join(';') + `&${query}Fields=` + val.map((f) => {
+      if (f.opreation) {
+        return `${f.field}:${f.opreation}`
+      } else {
+        return `${f.field}:${opreation}`
+      }
+    }).join(';') + `${query}&Join=and`
   }
   create = async (data) => {
     // TODO 添加数据验证

@@ -12,6 +12,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _Utility = require('./Utility');
 
+var _Schema = require('./Schema');
+
+var _Schema2 = _interopRequireDefault(_Schema);
+
 var _Resource = require('./Resource');
 
 var _Resource2 = _interopRequireDefault(_Resource);
@@ -33,6 +37,18 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
   var _this = this;
 
   _classCallCheck(this, QueryBuilder);
+
+  this.setWith = function () {
+    var props = {};
+    _this.schema.withes.forEach(function (withName) {
+      props[withName] = {
+        get: function get() {
+          return this._fun;
+        }
+      };
+    });
+    Object.defineProperties(_this, props);
+  };
 
   this.get = function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_regenerator2.default.mark(function _callee(id) {
@@ -116,16 +132,11 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
           return 'page=' + val[val.length - 2] + '&limit=' + val[val.length - 1];
         case 'filter':
           // TODO::需要实现查询操作符
-          return 'search=' + val.map(function (f) {
-            return f.field + ':' + f.value;
-          }).join(';') + '&searchFields=' + val.map(function (f) {
-            if (f.opreation) {
-              return f.field + ':' + f.opreation;
-            } else {
-              return f.field + ':like';
-            }
-          }).join(';') + '&searchJoin=and';
+          return _this._filter('search', val);
         default:
+          if (_this.schema.withes.indexOf(key) >= 0) {
+            return _this._filter(key, val, '=');
+          }
           return false;
       }
     }).filter(function (b) {
@@ -135,6 +146,20 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
       _this.params = {};
     }
     return result;
+  };
+
+  this._filter = function (qeruy, val) {
+    var opreation = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'like';
+
+    return query + '=' + val.map(function (f) {
+      return f.field + ':' + f.value;
+    }).join(';') + ('&' + query + 'Fields=') + val.map(function (f) {
+      if (f.opreation) {
+        return f.field + ':' + f.opreation;
+      } else {
+        return f.field + ':' + opreation;
+      }
+    }).join(';') + (query + '&Join=and');
   };
 
   this.create = function () {
@@ -168,7 +193,7 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
       }, _callee2, _this);
     }));
 
-    return function (_x3) {
+    return function (_x4) {
       return _ref2.apply(this, arguments);
     };
   }();
@@ -201,7 +226,7 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
       }, _callee3, _this);
     }));
 
-    return function (_x5) {
+    return function (_x6) {
       return _ref3.apply(this, arguments);
     };
   }();
@@ -283,6 +308,8 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
   this.handle = (0, _Utility.guid)();
   this.config = {};
   this.result = [];
+  this.schema = _Schema2.default.get(target);
+  this.setWith();
 };
 
 exports.default = QueryBuilder;
