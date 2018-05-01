@@ -171,7 +171,11 @@ class Resource {
             return include[key][0]
           }
         }
-        props[`${key}Items`] = include[key]
+        props[`${key}Items`] = {
+          get () {
+            return include[key]
+          }
+        }
       })
     }
     Object.defineProperties(this._resource.attributes, props)
