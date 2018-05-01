@@ -13,7 +13,7 @@ export default class QueryBuilder {
     this.handle = guid()
     this.config = {}
     this.result = []
-    this.schema = Schema.get(target)
+    this.schema = Schema.get(target) ? Schema.get(taget) : {}
     this.setWith()
   }
 
@@ -23,7 +23,9 @@ export default class QueryBuilder {
       this.schema.withes.forEach((withName) => {
         props[withName] = {
           get () {
-            return this._fun
+            return function (params) {
+              return this._fun(withName, params)
+            }
           }
         }
       })

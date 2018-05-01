@@ -44,7 +44,9 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
       _this.schema.withes.forEach(function (withName) {
         props[withName] = {
           get: function get() {
-            return this._fun;
+            return function (params) {
+              return this._fun(withName, params);
+            };
           }
         };
       });
@@ -310,7 +312,7 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
   this.handle = (0, _Utility.guid)();
   this.config = {};
   this.result = [];
-  this.schema = _Schema2.default.get(target);
+  this.schema = _Schema2.default.get(target) ? _Schema2.default.get(taget) : {};
   this.setWith();
 };
 
