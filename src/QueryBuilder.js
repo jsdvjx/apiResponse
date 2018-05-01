@@ -13,7 +13,7 @@ export default class QueryBuilder {
     this.handle = guid()
     this.config = {}
     this.result = []
-    this.schema = Schema.get(target) ? Schema.get(taget) : {}
+    this.schema = Schema.get(target) ? Schema.get(target) : {}
     this.setWith()
   }
 

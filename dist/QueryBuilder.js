@@ -312,7 +312,7 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
   this.handle = (0, _Utility.guid)();
   this.config = {};
   this.result = [];
-  this.schema = _Schema2.default.get(target) ? _Schema2.default.get(taget) : {};
+  this.schema = _Schema2.default.get(target) ? _Schema2.default.get(target) : {};
   this.setWith();
 };
 
