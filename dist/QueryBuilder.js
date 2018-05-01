@@ -40,14 +40,16 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
 
   this.setWith = function () {
     var props = {};
-    _this.schema.withes.forEach(function (withName) {
-      props[withName] = {
-        get: function get() {
-          return this._fun;
-        }
-      };
-    });
-    Object.defineProperties(_this, props);
+    if (_this.schema.withes) {
+      _this.schema.withes.forEach(function (withName) {
+        props[withName] = {
+          get: function get() {
+            return this._fun;
+          }
+        };
+      });
+      Object.defineProperties(_this, props);
+    }
   };
 
   this.get = function () {
@@ -134,7 +136,7 @@ var QueryBuilder = function QueryBuilder(axiosInstance, target) {
           // TODO::需要实现查询操作符
           return _this._filter('search', val);
         default:
-          if (_this.schema.withes.indexOf(key) >= 0) {
+          if (_this.schema.withes && _this.schema.withes.indexOf(key) >= 0) {
             return _this._filter(key, val, '=');
           }
           return false;

@@ -19,14 +19,16 @@ export default class QueryBuilder {
 
   setWith = () => {
     let props = {}
-    this.schema.withes.forEach((withName) => {
-      props[withName] = {
-        get () {
-          return this._fun
+    if (this.schema.withes) {
+      this.schema.withes.forEach((withName) => {
+        props[withName] = {
+          get () {
+            return this._fun
+          }
         }
-      }
-    })
-    Object.defineProperties(this, props)
+      })
+      Object.defineProperties(this, props)
+    }
   }
   get = async (id) => {
     let result = null
@@ -76,7 +78,7 @@ export default class QueryBuilder {
           // TODO::需要实现查询操作符
           return this._filter('search', val)
         default:
-          if (this.schema.withes.indexOf(key) >= 0) {
+          if (this.schema.withes && this.schema.withes.indexOf(key) >= 0) {
             return this._filter(key, val, '=')
           }
           return false
