@@ -113,7 +113,7 @@ var Resource = function () {
     this.requestConfig = {};
     if (resource.attributes.id !== undefined && resource.attributes.id instanceof Number) (0, _Cache2.default)(this._resource.type + '_' + this._resource.attributes.id, this._resource, 60);
     this.schema = _Schema2.default.get(this._resource.type);
-    this.schem = this.schema ? this.schema : {};
+    this.schema = this.schema ? this.schema : {};
     this._resolve();
   }
 
