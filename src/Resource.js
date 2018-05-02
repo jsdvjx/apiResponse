@@ -43,7 +43,7 @@ class Resource {
     let props = {}
     if (this._resource.include !== undefined && this._resource.include !== null) {
       this.include = this._resource.include.map((item) => {
-        return new Resource(item, this.request)
+        return new Resource(item, this.Request)
       })
     }
     let attributes = this._resource.attributes

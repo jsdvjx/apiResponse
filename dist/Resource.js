@@ -161,7 +161,7 @@ var Resource = function () {
       var props = {};
       if (this._resource.include !== undefined && this._resource.include !== null) {
         this.include = this._resource.include.map(function (item) {
-          return new Resource(item, _this3.request);
+          return new Resource(item, _this3.Request);
         });
       }
       var attributes = this._resource.attributes;
