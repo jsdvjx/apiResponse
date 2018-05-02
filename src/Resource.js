@@ -63,7 +63,7 @@ class Resource {
       }
     })
     if (this.schema) {
-      this.schema.withes !== null && this.schema.withes.forEach(function (includeName) {
+      (this.schema.withes instanceof Array) && this.schema.withes.forEach(function (includeName) {
         props[includeName] = {
           get () {
             let _tmp = (this.include !== undefined && this.include.length) && this.include.filter(function (_include) {
