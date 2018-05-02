@@ -147,6 +147,11 @@ var Resource = function () {
     key: 'setRequestConfig',
     value: function setRequestConfig(config) {
       this.requestConfig = _extends({}, this.requestConfig, config);
+      if (this.include) {
+        this.include.forEach(function (_include) {
+          _include.setRequestConfig(config);
+        });
+      }
     }
 
     /**

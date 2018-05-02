@@ -34,6 +34,11 @@ class Resource {
 
   setRequestConfig (config) {
     this.requestConfig = {...this.requestConfig, ...config}
+    if (this.include) {
+      this.include.forEach((_include) => {
+        _include.setRequestConfig(config)
+      })
+    }
   }
 
   /**
