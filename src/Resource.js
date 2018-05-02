@@ -115,19 +115,18 @@ class Resource {
     }*/
   }
 
-  destroy = async () => {
-    console.log(this.Request)
-    let result = await this.Request.delete(`${this.getType()}/${this.id}`, this.requestConfig)
+  destroy = async (config = false) => {
+    let result = await this.Request.delete(`${this.getType()}/${this.id}`, config ? config : this.requestConfig)
     return result
   }
 
-  save = async () => {
+  save = async (config = false) => {
     if (this._create) {
-      let result = await this.Request.post(`${this.type}`, this.item, this.requestConfig)
+      let result = await this.Request.post(`${this.type}`, this.item, config ? config : this.requestConfig)
       return result
     } else {
       if (this.change) {
-        let result = await this.Request.patch(`${this.type}/${this.id}`, this.changePart, this.requestConfig)
+        let result = await this.Request.patch(`${this.type}/${this.id}`, this.changePart, config ? config : this.requestConfig)
         return result
       } else {
         return false
