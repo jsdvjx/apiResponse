@@ -32,9 +32,9 @@ class Resource {
     return this._resource.attributes
   }
 
-  setRequestConfig (config) {
+  setRequestConfig (config, force = true) {
     this.requestConfig = {...this.requestConfig, ...config}
-    if (this.include) {
+    if (this.include && force) {
       this.include.forEach((_include) => {
         _include.setRequestConfig(config)
       })

@@ -146,8 +146,10 @@ var Resource = function () {
   }, {
     key: 'setRequestConfig',
     value: function setRequestConfig(config) {
+      var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
       this.requestConfig = _extends({}, this.requestConfig, config);
-      if (this.include) {
+      if (this.include && force) {
         this.include.forEach(function (_include) {
           _include.setRequestConfig(config);
         });
@@ -304,7 +306,7 @@ var Resource = function () {
         }, _callee3, this);
       }));
 
-      function _destroy(_x, _x2) {
+      function _destroy(_x2, _x3) {
         return _ref3.apply(this, arguments);
       }
 
