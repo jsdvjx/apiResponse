@@ -16,7 +16,6 @@ export default class QueryBuilder {
     this.schema = Schema.get(target) ? Schema.get(target) : {}
     this.setWith()
   }
-
   setWith = () => {
     let props = {}
     if (this.schema.withes) {
